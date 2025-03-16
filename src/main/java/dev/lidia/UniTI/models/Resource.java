@@ -1,6 +1,7 @@
 package dev.lidia.UniTI.models;
 
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -8,6 +9,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "resources")
+
 public class Resource {
 
     @Id
@@ -17,20 +19,19 @@ public class Resource {
     private String category;
     // @Column ( columnDefinition = "BLOB")
     // private byte[] image;
-    private String name;
     private String link;
+    @Column (name = "description", nullable =  false, columnDefinition = "VARCHAR(100)" )
     private String description;
 
     public Resource() {
     }
 
-    public Resource(Long id, String category, String name, String link, String description) {
+    public Resource(Long id, String category, String link, String description) {
         // byte[] image,
 
         this.id = id;
         this.category = category;
         // this.image = image;
-        this.name = name;
         this.link = link;
         this.description = description;
     }
@@ -59,13 +60,6 @@ public class Resource {
     // this.image = image;
     // }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getLink() {
         return link;
