@@ -1,30 +1,40 @@
 package dev.lidia.UniTI.services;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import dev.lidia.UniTI.models.User;
+import dev.lidia.UniTI.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
-import dev.lidia.UniTI.models.User;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
 
-    public List<User> findAll() {
 
-        List<User> users = new ArrayList<>();
+    private final UserRepository userRepository;
 
-        User Sara16 = new User(1L, "Sara16", "ps123");
-        User marioD = new User(2L, "marioD", "ps234");
-        User laia3 = new User(3L, "laia3", "ps345");
-        User meritxell_m = new User(4L, "meritxell_m", "ps456");
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
 
-        users.add(Sara16);
-        users.add(marioD);
-        users.add(laia3);
-        users.add(meritxell_m);
-
-        return users;
     }
 
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    public User save(User user) {
+        return userRepository.save(user);
+    }
+
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
+    }
+    public boolean login(String username, String password) {
+        User user = userRepository.findByUsername(username);
+        if (user != null && user.getPassword().equals(password)) { 
+            return true;
+        }
+        return false;
+
+    }
 }

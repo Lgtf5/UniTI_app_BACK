@@ -19,6 +19,7 @@ public class Resource {
     private String category;
     // @Column ( columnDefinition = "BLOB")
     // private byte[] image;
+    @Column (name = "link")
     private String link;
     @Column (name = "description", nullable =  false, columnDefinition = "VARCHAR(100)" )
     private String description;
