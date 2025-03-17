@@ -1,51 +1,40 @@
 package dev.lidia.UniTI.controllers;
-
-
-
-
 import java.util.List;
 
-
 import dev.lidia.UniTI.services.ResourceService;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.lidia.UniTI.models.Resource;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
-@RequestMapping (path = "api/v1")
+@RequestMapping("/resources")
 public class ResourceController {
 
-    // @Autowired
-    private ResourceService service;
+   
+    private final ResourceService resourceService;
 
-    public ResourceController (ResourceService service) {
-        this.service = service;
+    public ResourceController(ResourceService resourceService) {
+       
+        this.resourceService = resourceService;
     }
 
-    @GetMapping ("/resources")
-    public List<Resource> index() { 
-        
-            return service.findAll(); 
-
-            // List<Resource> resources = new ArrayList<>();
-
-            // Service sass = new Resource (1L, "Fronted","https://sass-lang.com/",
-            // "Página del propio procesador de CSS (Sass) que te hace más fácil y eficiente el desarrollo");
-
-            // Service dataCamp = new Resource (2L, "Backend", "https://www.datacamp.com/es/doc/java/polymorphism", "Página dónde explican el Polimorfismo Java con tipos, ejemplos y buenas prácticas");
-
-            // Service cssTricks = new Resource (3L, "Fronted", "https://css-tricks.com/snippets/css/complete-guide-grid/", "Guía completísima sobre CSS GRID y con ejemplos");
-
-            // Service webDev = new Resource (4L, "Testing", "https://web.dev/learn/testing/get-started/what-testing-is?hl=es-419", "Página donde encuentras sección de testing con ejemplos y pruebas a librerías");
-
-            // resources.add (sass);
-            // resources.add (dataCamp);
-            // resources.add (cssTricks);
-            // resources.add (webDev);
-
-            // return resources;
-        }
+    @PostMapping
+    public ResponseEntity<Resource> addResource(@RequestBody Resource resource) {
+        Resource addedResource = resourceService.addResource(resource);
+        return new ResponseEntity<>(addedResource, HttpStatus.CREATED);
     }
+
+    @GetMapping
+    public List<Resource> index() {
+        return resourceService.findAll();
+    }
+}
 

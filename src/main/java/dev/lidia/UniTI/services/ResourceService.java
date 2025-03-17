@@ -1,35 +1,52 @@
 package dev.lidia.UniTI.services;
 
-import java.util.ArrayList;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
-
+import dev.lidia.UniTI.controllers.ResourceController;
 import dev.lidia.UniTI.models.Resource;
+
+import dev.lidia.UniTI.repositories.ResourceRepository;
+
+
 
 @Service
 public class ResourceService {
+
     
-    public List<Resource> findAll() { 
+    private final ResourceRepository resourceRepository;
+
+    ResourceService( ResourceRepository resourceRepository) {
         
-        /* return service.findAll(); */
 
-            List<Resource> resources = new ArrayList<>();
-
-            Resource sass = new Resource (1L, "Fronted","https://sass-lang.com/",
-            "Página del propio procesador de CSS (Sass) que te hace más fácil y eficiente el desarrollo");
-
-            Resource dataCamp = new Resource (2L, "Backend", "https://www.datacamp.com/es/doc/java/polymorphism", "Página dónde explican el Polimorfismo Java con tipos, ejemplos y buenas prácticas");
-
-            Resource cssTricks = new Resource (3L, "Fronted", "https://css-tricks.com/snippets/css/complete-guide-grid/", "Guía completísima sobre CSS GRID y con ejemplos");
-
-            Resource webDev = new Resource (4L, "Testing", "https://web.dev/learn/testing/get-started/what-testing-is?hl=es-419", "Página donde encuentras sección de testing con ejemplos y pruebas a librerías");
-
-            resources.add (sass);
-            resources.add (dataCamp);
-            resources.add (cssTricks);
-            resources.add (webDev);
-
-            return resources;
+        this.resourceRepository = resourceRepository;
         }
+    
+    
+
+    private Resource mapTo(Resource entity) {
+        // Implement the mapping logic here
+        Resource resource = new Resource();
+        resource.setId(entity.getId());
+        resource.setCategory(entity.getCategory());
+        // Add other fields as necessary
+        return resource;
+    }
+    // Removed constructor that does not initialize resourceRepository
+
+    public Resource addResource(Resource resource) {
+        return mapTo (resourceRepository.save(mapTo(resource)));
+    }
+    
+    public List<Resource> findByCategory (String category) {
+        return resourceRepository.findByCategory(category)
+            .stream()
+            .map(this::mapTo)
+            .collect(Collectors.toList());
+    }
+    public List<Resource> findAll() {
+        return resourceRepository.findAll();
+    }
 }
