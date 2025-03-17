@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.lidia.UniTI.models.User;
 import dev.lidia.UniTI.services.UserService;
-import dev.lidia.UniTI.controllers.ResourceController;
 
 
 import java.util.List;
@@ -18,19 +17,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @RestController
 @RequestMapping(path = "/users")
 public class UserController {
 
-    
-
     private final UserService userService;
 
-   
     public UserController(UserService userService) {
         this.userService = userService;
-        
+
     }
 
     @GetMapping
@@ -43,8 +38,8 @@ public class UserController {
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         Optional<User> user = userService.findById(id);
         return user.map(ResponseEntity::ok)
-            .orElseGet(() -> ResponseEntity.notFound().build());
-                   
+                .orElseGet(() -> ResponseEntity.notFound().build());
+
     }
 
     @PostMapping("/register")
@@ -52,15 +47,16 @@ public class UserController {
         User user = userService.save(newUser);
         return ResponseEntity.ok(user);
     }
+
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody User user) {
         boolean success = userService.login(user.getUsername(), user.getPassword());
         if (success) {
             return ResponseEntity.ok("login succesfull"); 
-     } else {  
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("user or password incorrect")
-     };
+        } else {  
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("user or password incorrect");
+        }
         
     }
-    
+
 }

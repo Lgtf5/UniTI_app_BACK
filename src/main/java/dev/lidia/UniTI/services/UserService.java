@@ -1,5 +1,5 @@
 package dev.lidia.UniTI.services;
-import dev.lidia.UniTI.controllers.ResourceController;
+
 import dev.lidia.UniTI.models.User;
 import dev.lidia.UniTI.repositories.UserRepository;
 import org.springframework.stereotype.Service;
@@ -10,13 +10,12 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    private final controllers.ResourceController resourceController;
 
     private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository, controllers.ResourceController resourceController) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.resourceController = resourceController;
+
     }
 
     public List<User> findAll() {

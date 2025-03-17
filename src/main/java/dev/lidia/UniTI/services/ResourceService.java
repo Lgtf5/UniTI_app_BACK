@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
-import dev.lidia.UniTI.controllers.ResourceController;
+
 import dev.lidia.UniTI.models.Resource;
 
 import dev.lidia.UniTI.repositories.ResourceRepository;
