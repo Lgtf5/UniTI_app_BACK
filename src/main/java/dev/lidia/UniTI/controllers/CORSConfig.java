@@ -17,7 +17,7 @@ public class CORSConfig {
             public void addCorsMappings(@NonNull CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins("http://localhost:5173", "https://github.com/Lgtf5/UniTI_app_FRONT")
-                        .allowedMethods("GET", "POST", "OPTIONS")
+                        .allowedMethods("GET", "POST", "SET", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
             }
